@@ -1,0 +1,60 @@
+**********Problem**********
+Given an arbitrary ransom note string and another string containing letters from all the magazines, write a function that will return true if the ransom note can be constructed from the magazines ; otherwise, it will return false.
+
+Each letter in the magazine string can only be used once in your ransom note.
+
+Note:
+You may assume that both strings contain only lowercase letters.
+
+canConstruct("a", "b") -> false
+canConstruct("aa", "ab") -> false
+canConstruct("aa", "aab") -> true
+
+**********Solution**********
+
+class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        
+        char c1[]=ransomNote.toCharArray();
+        char c2[]=magazine.toCharArray();
+        HashMap<Character, Integer> hm1=new HashMap<>();
+        HashMap<Character, Integer> hm2=new HashMap<>();
+        
+        for(int i=0;i<c1.length;i++)
+        {
+            if(hm1.containsKey(c1[i]))
+            {
+                int count=hm1.get(c1[i]);
+                hm1.put(c1[i],count+1);
+            }
+            else
+                hm1.put(c1[i],1);
+        }
+        
+        
+         for(int i=0;i<c2.length;i++)
+        {
+            if(hm2.containsKey(c2[i]))
+            {
+                int count=hm2.get(c2[i]);
+                hm2.put(c2[i],count+1);
+            }
+            else
+                hm2.put(c2[i],1);
+        }
+        
+        int count=0;
+        for(Map.Entry<Character, Integer> e:hm1.entrySet())
+        {
+            Character ch1=e.getKey();
+            int count1=e.getValue();
+            if(hm2.containsKey(ch1) && hm2.get(ch1)>=count1)
+                count++;
+        }
+        
+        if(count==hm1.size())
+            return true;
+        else
+            return false;    
+    }
+}
