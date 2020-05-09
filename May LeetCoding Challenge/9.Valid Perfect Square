@@ -1,0 +1,62 @@
+**********Problem**********
+Given a positive integer num, write a function which returns True if num is a perfect square else False.
+
+Note: Do not use any built-in library function such as sqrt.
+
+Example 1:
+
+Input: 16
+Output: true
+Example 2:
+
+Input: 14
+Output: false
+**********Solution*********
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        
+        ArrayList<Integer> al=new ArrayList<>();
+        al=findPrimeFactor(num,al);
+    
+        if(al.size()==1)
+        {
+            if(al.get(0)==1|| al.get(0)==4 || al.get(0)==9)
+                return true;
+            else
+                return false;
+        }
+            
+        if(al.size()%2!=0)
+            return false;
+        
+        for(int i=0;i<al.size();i=i+2)
+        {
+            if(!al.get(i).equals(al.get(i+1)))
+                return false;
+        }
+        
+        return true;      
+    }
+    
+    public ArrayList findPrimeFactor(int n, ArrayList<Integer> al)
+    {
+        while(n%2==0)
+        {
+            al.add(2);
+            n/=2;
+        }
+        
+        for(int i=3;i<=n/2;i=i+2)
+        {
+            while(n%i==0)
+            {
+                al.add(i);
+                n/=i;
+            }
+        }
+        if(n>2)
+            al.add(n);
+        
+        return al;
+    }
+}
